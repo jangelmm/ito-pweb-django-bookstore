@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Productos</title>
+</head>
+<body>
+    <h1>Nuestros Productos</h1>
+    
+    {% for product in object_list %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.description|truncatewords:20 }}</p>
+            <p><strong>Precio: ${{ product.price }}</strong></p>
+            
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}" width="200">
+            {% endif %}
+            
+            <br>
+            <a href="{% url 'product_detail' product.pk %}">Ver detalles</a>
+        </div>
+    {% empty %}
+        <p>No hay productos disponibles.</p>
+    {% endfor %}
+</body>
+</html>
