@@ -1,18 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>{{ object.title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ object.title }} - Bookstore</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>{{ object.title }}</h1>
-    
-    {% if object.image %}
-        <img src="{{ object.image.url }}" alt="{{ object.title }}" width="300">
-    {% endif %}
-    
-    <p><strong>Descripción:</strong> {{ object.description }}</p>
-    <p><strong>Precio:</strong> ${{ object.price }}</p>
-    
-    <a href="{% url 'product_list' %}">← Volver a la lista</a>
+    <div class="header">
+        <div class="container">
+            <h1>Detalles del Producto</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="product-detail">
+            {% if object.image %}
+            <img src="{{ object.image.url }}" alt="{{ object.title }}" class="detail-image">
+            {% endif %}
+            
+            <h2>{{ object.title }}</h2>
+            <p><strong>Descripción:</strong></p>
+            <p>{{ object.description }}</p>
+            
+            <p class="product-price">Precio: ${{ object.price }}</p>
+            
+            <div style="margin-top: 2rem;">
+                <a href="{% url 'product_list' %}" class="btn btn-secondary">
+                    ← Volver a la lista
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
