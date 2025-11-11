@@ -18,14 +18,16 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from products.views import ProductList, ProductDetail
+from products.views import ProductList, ProductDetail, ProductCreate, ProductUpdate, ProductDelete
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', ProductList.as_view(), name='product_list'),
     path('product/<int:pk>/', ProductDetail.as_view(), name='product_detail'),
+    path('product/new/', ProductCreate.as_view(), name='product_create'),
+    path('product/<int:pk>/edit/', ProductUpdate.as_view(), name='product_update'),
+    path('product/<int:pk>/delete/', ProductDelete.as_view(), name='product_delete'),
 ]
 
-# Servir archivos media en desarrollo
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
