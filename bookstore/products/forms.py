@@ -8,26 +8,41 @@ class ProductForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-field',
-                'placeholder': 'Título del producto'
+                'placeholder': 'Título del producto',
+                'minlength': '3',  # ← Validación HTML5
+                'maxlength': '200', # ← Validación HTML5
+                'required': 'true', # ← Validación HTML5
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-field',
                 'rows': 4,
-                'placeholder': 'Descripción del producto'
+                'placeholder': 'Descripción del producto',
+                'minlength': '10',  # ← Mínimo 10 caracteres
+                'required': 'true',
             }),
             'price': forms.NumberInput(attrs={
                 'class': 'form-field',
                 'step': '0.01',
-                'placeholder': '0.00'
+                'min': '0.01',      # ← Mínimo $0.01
+                'max': '999999.99', # ← Máximo según max_digits=8
+                'placeholder': '0.00',
+                'required': 'true',
             }),
             'image': forms.FileInput(attrs={
-                'class': 'form-field'
+                'class': 'form-field',
+                'accept': 'image/*', # ← Solo aceptar imágenes
             })
         }
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Agregar clases CSS dinámicas basadas en validación (como Rails)
-        for field_name, field in self.fields.items():
-            if self.instance.pk and field_name in self.errors:
-                field.widget.attrs['class'] = 'form-field error'
+    # Validación del servidor (siempre necesaria)
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if len(title.strip()) < 3:
+            raise forms.ValidationError("El título debe tener al menos 3 caracteres")
+        return title
+    
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <= 0:
+            raise forms.ValidationError("El precio debe ser mayor a 0")
+        return price

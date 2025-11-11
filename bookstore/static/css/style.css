@@ -279,3 +279,78 @@ body {
         text-align: center;
     }
 }
+
+/* ESTADOS DE VALIDACIÓN HTML5 */
+.form-field:valid {
+    border-color: #10b981;
+    border-left: 4px solid #10b981;
+}
+
+.form-field:invalid:not(:focus):not(:placeholder-shown) {
+    border-color: #dc2626;
+    border-left: 4px solid #dc2626;
+}
+
+.form-field:focus:valid {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.form-field:focus:invalid {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* Indicador de campo requerido */
+.required {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* Texto de ayuda */
+.help-text {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
+/* Mensajes de error mejorados */
+.field-errors {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.375rem;
+}
+
+.error-text {
+    color: #dc2626;
+    font-size: 0.875rem;
+    display: block;
+}
+
+/* Información de validación */
+.validation-info {
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.validation-info p {
+    margin: 0;
+    color: #1e40af;
+}
+
+/* Estados de campos específicos */
+input[type="number"]:out-of-range {
+    border-color: #f59e0b;
+    background: #fffbeb;
+}
+
+input:user-invalid {
+    border-color: #dc2626;
+}

@@ -10,19 +10,36 @@
 <body>
     <div class="header">
         <div class="container">
-            <h1>{% if form.instance.pk %}Editar{% else %}Crear{% endif %} Producto</h1>
+            <h1>{% if form.instance.pk %} Editar{% else %}  Crear{% endif %} Producto</h1>
         </div>
     </div>
 
     <div class="container">
         <div class="form-container">
-            <form method="post" enctype="multipart/form-data" class="product-form">
+            <!-- 
+                IMPORTANTE: novalidate="false" permite validación HTML5 
+                El navegador mostrará mensajes automáticamente
+            -->
+            <form method="post" enctype="multipart/form-data" class="product-form" novalidate="false">
                 {% csrf_token %}
                 
                 {% for field in form %}
                 <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                        <span class="required">*</span>
+                        {% endif %}
+                    </label>
+                    
                     {{ field }}
+                    
+                    <!-- Help text (aparece debajo del campo) -->
+                    {% if field.help_text %}
+                    <div class="help-text">{{ field.help_text }}</div>
+                    {% endif %}
+                    
+                    <!-- Errores de validación HTML5 + Django -->
                     {% if field.errors %}
                     <div class="field-errors">
                         {% for error in field.errors %}
@@ -40,6 +57,14 @@
                     <a href="{% url 'product_list' %}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Mensaje de explicación para el usuario -->
+    <div class="container">
+        <div class="validation-info">
+            <p> <strong>Validación automática:</strong> Este formulario valida automáticamente en tu navegador. 
+            No se necesita JavaScript.</p>
         </div>
     </div>
 </body>
